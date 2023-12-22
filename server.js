@@ -1,0 +1,23 @@
+// server.js or your entry file
+require('dotenv').config();
+const express = require("express");
+const mongoose = require('mongoose');
+const connectDb = require("./config/dbConnection");
+const errorHandler = require("./middleware/errorHandler");
+
+mongoose.set('strictQuery', false);
+
+connectDb();
+
+const app = express();
+const port = process.env.PORT || 5000;
+
+app.use(express.json());
+
+app.use("/api/users", require("./routes/userRoutes"));
+
+app.use(errorHandler);
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
