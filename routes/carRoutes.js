@@ -1,6 +1,6 @@
 const express = require("express");
 const {
- createCar, getCar, updateCar, deleteCar ,getCars
+ createCar,  updateCar, deleteCar ,getCars, getCarById
 } = require("../controllers/carController");
 
 
@@ -10,6 +10,6 @@ router.post("/", createCar);
 router.get("/",getCars);
 router.put("/:id",updateCar);
 router.delete("/:id",deleteCar);
-router.get("/:id",getCar);
+router.get("/:id",getCarById);
 
 module.exports = router;

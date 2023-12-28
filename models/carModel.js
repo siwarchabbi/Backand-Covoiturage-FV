@@ -41,6 +41,7 @@ const carSchema = mongoose.Schema(
       enum: ['confirmed', 'cancelled', 'pending'],
       default: 'pending',
     },
+    
   },
   {
     timestamps: true,
