@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const carSchema = mongoose.Schema(
   {
+    
     image: {
       type: String,
       required: true,
