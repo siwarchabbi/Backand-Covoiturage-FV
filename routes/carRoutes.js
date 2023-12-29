@@ -1,6 +1,6 @@
 const express = require("express");
 const {
- createCar, getCar, updateCar, deleteCar ,getCars
+ createCar,  updateCar, deleteCar ,getCars, getCarById
 } = require("../controllers/carController");
 
 
@@ -8,8 +8,8 @@ const router = express.Router();
 
 router.post("/", createCar);
 router.get("/",getCars);
-router.put("/:CarID",updateCar);
-router.delete("/:CarID",deleteCar);
-router.get("/:CarID",getCar);
+router.put("/:id",updateCar);
+router.delete("/:id",deleteCar);
+router.get("/:id",getCarById);
 
 module.exports = router;

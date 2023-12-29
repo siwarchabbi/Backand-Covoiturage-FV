@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 
 const carSchema = mongoose.Schema(
   {
+    
     image: {
       type: String,
       required: true,
@@ -40,6 +41,7 @@ const carSchema = mongoose.Schema(
       enum: ['confirmed', 'cancelled', 'pending'],
       default: 'pending',
     },
+    
   },
   {
     timestamps: true,
