@@ -55,8 +55,6 @@ const loginUser = asyncHandler(async (req, res) => {
       const accessToken = jwt.sign(
         {
           user: {
-            username: user.username,
-            email: user.email,
             id: user.id,
           },
         },
@@ -64,8 +62,16 @@ const loginUser = asyncHandler(async (req, res) => {
         { expiresIn: "15m" }
       );
 
-      // Include a custom message in the response
-      res.status(200).json({ message: "User found and logged in successfully", accessToken });
+      // Include user details in the response
+      res.status(200).json({
+        message: "User found and logged in successfully",
+        accessToken,
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+        },
+      });
     } else {
       res.status(401).json({ error: "Email or password is not valid" });
     }

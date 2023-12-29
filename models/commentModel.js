@@ -10,7 +10,7 @@ const CommentSchema = mongoose.Schema(
       },
       car: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Car",
+        ref: "car",
         required: true,
       },
       content: {

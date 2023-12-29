@@ -15,7 +15,7 @@ const port = process.env.PORT || 5000;
 app.use(cors()); // Use cors middleware to enable Cross-Origin Resource Sharing
 app.use(express.json());
 
-app.use('/api/comments', require('./routes/commentRoutes'));
+app.use('/api/car/api/comments', require('./routes/commentRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/car', require('./routes/carRoutes'));
 

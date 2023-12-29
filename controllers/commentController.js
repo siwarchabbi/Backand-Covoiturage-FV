@@ -28,4 +28,8 @@ const getCommentsByCar = asyncHandler(async (req, res) => {
   res.json(comments);
 });
 
+
+
+
+
 module.exports = { createComment, getCommentsByCar };
