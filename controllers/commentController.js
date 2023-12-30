@@ -28,8 +28,37 @@ const getCommentsByCar = asyncHandler(async (req, res) => {
   res.json(comments);
 });
 
+// Update Comment
+const updateComment = asyncHandler(async (req, res) => {
+    const commentId = req.params.commentId;
+    const { content } = req.body;
+  
+    const comment = await Comment.findByIdAndUpdate(
+      commentId,
+      { content },
+      { new: true }
+    );
+  
+    if (!comment) {
+      res.status(404).json({ error: "Comment not found" });
+    } else {
+      res.json(comment);
+    }
+  });
+  
+  // Delete Comment
+  const deleteComment = asyncHandler(async (req, res) => {
+    const commentId = req.params.commentId;
+  
+    const comment = await Comment.findByIdAndDelete(commentId);
+  
+    if (!comment) {
+      res.status(404).json({ error: "Comment not found" });
+    } else {
+      res.json({ message: "Comment deleted successfully" });
+    }
+  });
 
 
 
-
-module.exports = { createComment, getCommentsByCar };
+  module.exports = { createComment, getCommentsByCar, updateComment, deleteComment };
