@@ -1,16 +1,37 @@
 const Car = require("../models/carModel");
+const asyncHandler = require("express-async-handler");
     //POST
     //http://localhost:5000/api/car/
+    const createCar = asyncHandler(async (req, res) => {
     
-    const createCar = async (req, res) => {
-        try {
-          const result = await Car.create(req.body);
-          res.status(200).json({ result });
-        } catch (error) {
-          console.error(error);
-          res.status(500).json({ msg: 'Internal Server Error' });
-        }
-      };
+      try {
+        const { user, destinationLocation, departureDateTime, departureLocation, seatPrice , seatAvailable , model , matricule, status} = req.body;
+        const image = req.file ? req.file.filename : null;
+
+    
+        console.log('Creating car with data:', req.body);
+    
+        const result = await Car.create({ 
+          user, 
+          destinationLocation, 
+          departureDateTime, 
+          departureLocation, 
+          seatPrice, 
+          seatAvailable,
+          model,
+          matricule, 
+          status, 
+          image});
+    
+        console.log('Car created successfully:', result);
+    
+        res.status(200).json({ result });
+      } catch (error) {
+        console.error('Error creating car:', error);
+        res.status(500).json({ msg: 'Internal Server Error' });
+      }
+    });
+        
       
     //GET
     //http://localhost:5000/api/car/
@@ -42,25 +63,26 @@ const Car = require("../models/carModel");
     //PUT
     //http://localhost:5000/api/car/CarID
     const updateCar = async (req, res) => {
-
-        const carId = req.params.id;
-        const updatedCarData = req.body;
-    
-        try {
-          const updatedCar = await Car.findByIdAndUpdate(carId, updatedCarData, { new: true });
-          if (!updatedCar) {
-            return res.status(404).json({ error: 'Car not found' });
-          }
-          res.json(updatedCar);
-        } catch (error) {
-          res.status(500).json({ error: 'Internal Server Error' });
+      try {
+        const car = await Car.findOneAndUpdate(
+          { _id: req.params.id },
+          req.body,
+          { new: true, runValidators: true }
+        );
+        if (!car) {
+          return res.status(404).json({ msg: 'Car not found' });
         }
-      };
+        res.status(200).json(car);
+      } catch (error) {
+        console.error('Error updating car:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+      }
+    };
 
     //DELETE
     //http://localhost:5000/api/car/CarID
 
-    const deleteCar = async (req, res) => {
+   const deleteCar = async (req, res) => {
       const carId = req.params.id;
   
       try {
@@ -72,6 +94,9 @@ const Car = require("../models/carModel");
       } catch (error) {
         res.status(500).json({ error: 'Internal Server Error' });
       }
-    };
+    }
+  
+
+    
   module.exports = { createCar ,getCars , getCarById , deleteCar, updateCar };
  
