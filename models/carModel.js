@@ -41,11 +41,17 @@ const carSchema = mongoose.Schema(
       enum: ['confirmed', 'cancelled', 'pending'],
       default: 'pending',
     },
-    
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   {
     timestamps: true,
   }
 );
-
+carSchema.virtual('imageUrl').get(function () {
+  return `/uploads/${this.image}`;
+});
 module.exports = mongoose.model("car", carSchema);
