@@ -89,6 +89,37 @@ const currentUser = asyncHandler(async (req, res) => {
   res.json(req.user);
 });
 
+const getProfile = asyncHandler( async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-module.exports = { registerUser, loginUser, currentUser };
+    const userProfile = user.displayProfile();
+    res.json(userProfile);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Update user information
+const putProfile = asyncHandler( async (req, res) => {
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    await user.updateInfo(req.body);
+    const updatedUser = await User.findById(req.params.userId);
+
+    res.json(updatedUser.displayProfile());
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
+
+module.exports = { registerUser, loginUser, currentUser , getProfile ,putProfile };
  
