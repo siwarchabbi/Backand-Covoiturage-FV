@@ -14,7 +14,7 @@ connectDb();
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use(cors()); // Use cors middleware to enable Cross-Origin Resource Sharing
+app.use(cors()); 
 app.use(express.json());
 
 app.use('/api/car/api/comments', require('./routes/commentRoutes'));
