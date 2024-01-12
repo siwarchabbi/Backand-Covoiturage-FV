@@ -18,6 +18,7 @@ app.use(cors()); // Use cors middleware to enable Cross-Origin Resource Sharing
 app.use(express.json());
 
 app.use('/api/car/api/comments', require('./routes/commentRoutes'));
+app.use('/api/favorie', require('./routes/favorieRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/car', require('./routes/carRoutes'));
 
