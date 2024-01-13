@@ -100,11 +100,7 @@ const asyncHandler = require("express-async-handler");
       }
     });
     
-    
-    
-    
-     
-
+  
     //DELETE
     //http://localhost:5000/api/car/CarID
 
