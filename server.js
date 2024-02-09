@@ -16,6 +16,9 @@ const port = process.env.PORT || 5000;
 
 app.use(cors()); 
 app.use(express.json());
+app.use(cors())
+app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.json())
 
 app.use('/api/car/api/comments', require('./routes/commentRoutes'));
 app.use('/api/favorie', require('./routes/favorieRoutes'));

@@ -41,6 +41,8 @@ userSchema.methods.displayProfile = function () {
 
 // Method to update user information
 userSchema.methods.updateInfo = function (updateData) {
+  if (updateData.username) this.username = updateData.username;
+  if (updateData.email) this.email = updateData.email;
   if (updateData.age) this.age = updateData.age;
   if (updateData.photoProfile) this.photoProfile = updateData.photoProfile;
   if (updateData.phone) this.phone = updateData.phone;
