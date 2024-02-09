@@ -15,17 +15,23 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add the user password"],
     },
-    age:String,
-    photoProfile:String,
+    age: String,
+    photoProfile: String,
     phone: String,
     firstname: String,
     lastname: String,
     address: String,
+    etat: {
+      type: String,
+      enum: ["PASSENGER", "DRIVER"],
+      default: "PASSENGER"
+    }
   },
   {
     timestamps: true,
   }
 );
+
 userSchema.methods.displayProfile = function () {
   return {
     username: this.username,
@@ -35,12 +41,14 @@ userSchema.methods.displayProfile = function () {
     phone: this.phone,
     firstname: this.firstname,
     lastname: this.lastname,
-    address: this.address
+    address: this.address,
+    etat: this.etat,
   };
 };
 
 // Method to update user information
 userSchema.methods.updateInfo = function (updateData) {
+  if (updateData.etat) this.etat = updateData.etat;
   if (updateData.username) this.username = updateData.username;
   if (updateData.email) this.email = updateData.email;
   if (updateData.age) this.age = updateData.age;
