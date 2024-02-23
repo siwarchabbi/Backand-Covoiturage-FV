@@ -31,6 +31,22 @@ const asyncHandler = require("express-async-handler");
         res.status(500).json({ msg: 'Internal Server Error' });
       }
     });
+
+
+//GET
+//http://localhost:5000/api/car/user/:userId
+const getCarsByUserId = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const cars = await Car.find({ user: userId });
+    res.status(200).json(cars);
+  } catch (error) {
+    console.error('Error fetching cars by user ID:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
         
       
     //GET
@@ -120,5 +136,5 @@ const asyncHandler = require("express-async-handler");
   
 
     
-  module.exports = { createCar ,getCars , getCarById , deleteCar, updateCar };
+  module.exports = { createCar ,getCars , getCarById , deleteCar, updateCar, getCarsByUserId };
  
