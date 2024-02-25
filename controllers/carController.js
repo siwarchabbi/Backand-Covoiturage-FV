@@ -5,22 +5,20 @@ const asyncHandler = require("express-async-handler");
     const createCar = asyncHandler(async (req, res) => {
     
       try {
-        const { user, destinationLocation, departureDateTime, departureLocation, seatPrice , seatAvailable , model , matricule, status} = req.body;
+        const { userId, destinationLocation, destinationDateTime,departureDateTime, departureLocation, seatPrice , seatAvailable } = req.body;
         const image = req.file ? req.file.filename : null;
 
     
         console.log('Creating car with data:', req.body);
     
         const result = await Car.create({ 
-          user, 
+          user: userId, 
           destinationLocation, 
+          destinationDateTime,
           departureDateTime, 
           departureLocation, 
           seatPrice, 
           seatAvailable,
-          model,
-          matricule, 
-          status, 
           image});
     
         console.log('Car created successfully:', result);

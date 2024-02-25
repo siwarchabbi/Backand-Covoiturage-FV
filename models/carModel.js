@@ -20,27 +20,20 @@ const carSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    destinationDateTime: {
+      type: Date,
+      required: true,
+    },
     seatPrice: {
       type: Number,
       required: true,
     }, 
     seatAvailable: {
-      type: String,
+      type: Number,
       required: true,
     },
-    model: {
-      type: String,
-      required: true,
-    },
-    matricule: {
-      type: String,
-      required: true,
-    },
-    status: {
-      type: String,
-      enum: ['confirmed', 'cancelled', 'pending'],
-      default: 'pending',
-    },
+ 
+
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
