@@ -34,7 +34,7 @@ const asyncHandler = require("express-async-handler");
 
 
 //GET
-//http://localhost:5000/api/car/user/:userId
+//http://localhost:5000/api/car/user/:userId ------
 const getCarsByUserId = async (req, res) => {
   const userId = req.params.userId;
 
