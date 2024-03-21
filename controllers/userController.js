@@ -111,21 +111,41 @@ const getProfile = asyncHandler( async (req, res) => {
   }
 });
 
-// Update user information
-const putProfile = asyncHandler( async (req, res) => {
-  try {
-    const user = await User.findById(req.params.userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    await user.updateInfo(req.body);
-    const updatedUser = await User.findById(req.params.userId);
 
+// Update user information
+const putProfile = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const updateData = req.body;
+    const image = req.file ? req.file.filename : null;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Update user information
+    if (updateData.username) user.username = updateData.username;
+    if (updateData.email) user.email = updateData.email;
+    if (updateData.password) user.password = updateData.password;
+    if (updateData.age) user.age = updateData.age;
+    if (updateData.photoProfile) user.photoProfile = updateData.photoProfile;
+    if (updateData.phone) user.phone = updateData.phone;
+    if (updateData.firstname) user.firstname = updateData.firstname;
+    if (updateData.lastname) user.lastname = updateData.lastname;
+    if (updateData.address) user.address = updateData.address;
+    if (image) user.image = image;
+
+    await user.updateInfo(updateData);
+
+    const updatedUser = await User.findById(userId);
     res.json(updatedUser.displayProfile());
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error(err);
+    res.status(500).json({ message: 'Internal Server Error' });
   }
-});
+};
+
 
 
 

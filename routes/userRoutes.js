@@ -1,4 +1,6 @@
 const express = require("express");
+const multer = require("multer");
+
 const {
   registerUser,
   currentUser,
@@ -6,8 +8,18 @@ const {
   putProfile,
   getProfile,
 } = require("../controllers/userController");
-const validateToken = require("../middleware/validateTokenHandler");
 
+const validateToken = require("../middleware/validateTokenHandler");
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads');
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+
+const upload = multer({ storage: storage });
 const router = express.Router();
 
 router.post("/register", registerUser);
@@ -16,6 +28,6 @@ router.post("/login", loginUser);
 
 router.get("/current", validateToken, currentUser);
 router.get("/profile/:userId", getProfile);
-router.put("/update/:userId", putProfile);
+router.put("/update/:userId", upload.single('image'), putProfile);
 
 module.exports = router;

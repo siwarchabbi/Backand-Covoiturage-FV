@@ -3,23 +3,26 @@ const asyncHandler = require("express-async-handler");
     //POST
     //http://localhost:5000/api/car/
     const createCar = asyncHandler(async (req, res) => {
-    
       try {
-        const { userId, destinationLocation, destinationDateTime,departureDateTime, departureLocation, seatPrice , seatAvailable } = req.body;
-        const image = req.file ? req.file.filename : null;
-
-    
-        console.log('Creating car with data:', req.body);
-    
-        const result = await Car.create({ 
-          user: userId, 
-          destinationLocation, 
+        const {
+          userId,
+          destinationLocation,
           destinationDateTime,
-          departureDateTime, 
-          departureLocation, 
-          seatPrice, 
-          seatAvailable,
-          image});
+          departureDateTime,
+          departureLocation,
+          seatPrice,
+          seatAvailable
+        } = req.body;
+  
+        const result = await Car.create({
+          user: userId,
+          destinationLocation,
+          destinationDateTime,
+          departureDateTime,
+          departureLocation,
+          seatPrice,
+          seatAvailable
+        });
     
         console.log('Car created successfully:', result);
     
@@ -29,6 +32,7 @@ const asyncHandler = require("express-async-handler");
         res.status(500).json({ msg: 'Internal Server Error' });
       }
     });
+    
         
       
     //GET
@@ -42,6 +46,20 @@ const asyncHandler = require("express-async-handler");
         res.status(500).json({ error: 'Internal Server Error' });
       }
     };
+    //GET
+//http://localhost:5000/api/car/user/:userId ------
+const getCarsByUserId = async (req, res) => {
+  const userId = req.params.userId;
+
+  try {
+    const cars = await Car.find({ user: userId });
+    res.status(200).json(cars);
+  } catch (error) {
+    console.error('Error fetching cars by user ID:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
     //GET
     //http://localhost:5000/api/car/CarID
   const  getCarById= async (req, res) => {
@@ -65,11 +83,10 @@ const asyncHandler = require("express-async-handler");
       try {
         const carId = req.params.id;
         const { departureDateTime, departureLocation, destinationLocation, seatPrice, seatAvailable, model, matricule, status, user } = req.body;
-        const image = req.file ? req.file.filename : null;
+        
     
         console.log('Updating car with data:', req.body);
     
-        // Check if the car exists
         const existingCar = await Car.findById(carId);
         if (!existingCar) {
           return res.status(404).json({ msg: 'Car not found' });
@@ -84,7 +101,6 @@ const asyncHandler = require("express-async-handler");
         existingCar.model = model;
         existingCar.matricule = matricule;
         existingCar.status = status;
-        existingCar.image = image || existingCar.image;
         existingCar.user = user; // Set the user field
     
         const updatedCar = await existingCar.save();
@@ -118,5 +134,5 @@ const asyncHandler = require("express-async-handler");
   
 
     
-  module.exports = { createCar ,getCars , getCarById , deleteCar, updateCar };
+  module.exports = { createCar ,getCars , getCarById , deleteCar, updateCar ,getCarsByUserId};
  
