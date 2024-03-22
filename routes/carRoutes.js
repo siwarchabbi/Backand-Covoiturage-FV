@@ -20,7 +20,7 @@ const router = express.Router();
 router.post("/", upload.single('image'), createCar);
 router.get("/", getCars);
 router.get("/user/:userId", getCarsByUserId);
-router.put("/:id", upload.single('image'), updateCar);
+router.put("/:id", updateCar);
 router.delete("/:id", deleteCar);
 router.get("/:id", getCarById);
 
