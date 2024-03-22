@@ -21,11 +21,15 @@ const userSchema = mongoose.Schema(
     firstname: String,
     lastname: String,
     address: String,
+    image:String,
   },
   {
     timestamps: true,
   }
 );
+userSchema.virtual('imageUrl').get(function () {
+  return `/uploads/${this.image}`;
+});
 userSchema.methods.displayProfile = function () {
   return {
     username: this.username,
@@ -35,7 +39,8 @@ userSchema.methods.displayProfile = function () {
     phone: this.phone,
     firstname: this.firstname,
     lastname: this.lastname,
-    address: this.address
+    address: this.address,
+    image: this.image
   };
 };
 
@@ -47,6 +52,7 @@ userSchema.methods.updateInfo = function (updateData) {
   if (updateData.firstname) this.firstname = updateData.firstname;
   if (updateData.lastname) this.lastname = updateData.lastname;
   if (updateData.address) this.address = updateData.address;
+  if (updateData.image) this.image = updateData.image;
   return this.save();
 };
 

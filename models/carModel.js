@@ -5,7 +5,7 @@ const carSchema = mongoose.Schema(
     
     image: {
       type: String,
-      required: false,
+      required: true,
     },
     
     departureDateTime: {
@@ -32,7 +32,6 @@ const carSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
- 
 
     user: {
       type: mongoose.Schema.Types.ObjectId,
@@ -44,7 +43,5 @@ const carSchema = mongoose.Schema(
     timestamps: true,
   }
 );
-carSchema.virtual('imageUrl').get(function () {
-  return `/uploads/${this.image}`;
-});
+
 module.exports = mongoose.model("car", carSchema);
