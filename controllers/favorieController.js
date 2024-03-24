@@ -29,7 +29,7 @@ const getFavorites = asyncHandler(async (req, res) => {
 const removeFavorite = asyncHandler(async (req, res) => {
   const favorieId = req.params.favorieId;
 
-  const favorie = await Favorie.findByIdAndDelete(favorieId);
+  const favorie = await Favorie.findByIdAndDelete(favogitrieId);
 
   if (!favorie) {
     res.status(404).json({ error: "Favorite not found" });
