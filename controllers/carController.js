@@ -84,7 +84,6 @@ const asyncHandler = require("express-async-handler");
         existingCar.model = model;
         existingCar.matricule = matricule;
         existingCar.status = status;
-        existingCar.image = image || existingCar.image;
         existingCar.user = user; // Set the user field
     
         const updatedCar = await existingCar.save();
@@ -97,7 +96,7 @@ const asyncHandler = require("express-async-handler");
         res.status(500).json({ msg: 'Internal Server Error' });
       }
     });
-
+    
     //GET
 //http://localhost:5000/api/car/user/:userId ------
 const getCarsByUserId = async (req, res) => {
