@@ -2,9 +2,6 @@ const mongoose = require("mongoose");
 
 const carSchema = mongoose.Schema(
   {
-    
-    
-    
     departureDateTime: {
       type: Date,
       required: true,

@@ -12,7 +12,7 @@ const addFavorite = asyncHandler(async (req, res) => {
     car: carId,
     datecreation: new Date(),
   });
-
+  console.log('Creating :', req.body);
   res.status(201).json(favorie);
 });
 
@@ -29,7 +29,7 @@ const getFavorites = asyncHandler(async (req, res) => {
 const removeFavorite = asyncHandler(async (req, res) => {
   const favorieId = req.params.favorieId;
 
-  const favorie = await Favorie.findByIdAndDelete(favogitrieId);
+  const favorie = await Favorie.findByIdAndDelete(favorieId);
 
   if (!favorie) {
     res.status(404).json({ error: "Favorite not found" });
